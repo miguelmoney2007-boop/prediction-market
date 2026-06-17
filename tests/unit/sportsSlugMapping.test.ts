@@ -65,6 +65,17 @@ const resolver = buildSportsSlugResolver([
     useForEventClassification: false,
   },
   {
+    menuSlug: 'bkbbl',
+    h1Title: 'Germany BBL',
+    label: 'Germany BBL',
+    aliases: ['germany-bbl'],
+    mappedTags: ['Germany BBL', 'BBL'],
+    sections: {
+      gamesEnabled: true,
+      propsEnabled: false,
+    },
+  },
+  {
     menuSlug: 'ufc',
     h1Title: 'UFC',
     label: 'UFC',
@@ -103,6 +114,21 @@ describe('sports slug mapping', () => {
     })
 
     expect(slug).toBe('bra')
+  })
+
+  it('maps Germany BBL event sports data to the bkbbl route slug', () => {
+    const slug = resolveCanonicalSportsSportSlug(resolver, {
+      sportsSportSlug: 'bkbbl',
+      sportsSeriesSlug: 'bkbbl',
+      sportsTags: ['Sports', 'Games', 'Basketball', 'Germany BBL'],
+    })
+
+    expect(slug).toBe('bkbbl')
+    expect(resolveCanonicalSportsSlugAlias(resolver, 'germany-bbl')).toBe('bkbbl')
+    expect(resolveSportsSectionConfigBySlug(resolver, 'bkbbl')).toEqual({
+      gamesEnabled: true,
+      propsEnabled: false,
+    })
   })
 
   it('maps url aliases to canonical menu slug', () => {
